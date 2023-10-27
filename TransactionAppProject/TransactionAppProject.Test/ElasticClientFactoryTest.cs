@@ -1,6 +1,6 @@
 namespace TransactionAppProject.Test;
 
-public class UnitTest1
+public class ElasticClientFactoryTest
 {
     [Fact]
     public void Test1()
