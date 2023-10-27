@@ -1,3 +1,15 @@
+using TransactionAppProject.Classes;
+
+
+// Read Environment Configs
+var configFilePath = "app.config";
+var configObj = new ReadConfigurations(configFilePath);
+
+// Connecting to Elasticsearch
+var elasticObj = new ElasticClientFactory(configObj);
+var elasticClient = elasticObj.GetElasticsearchClient();
+
+// Start WebApplication Setup
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
