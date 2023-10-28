@@ -14,9 +14,9 @@ public class ElasticClientFactoryTest
         var config = new Mock<IReadConfigurations>();
         config.Setup(x => x.ConfigValues["ElasticsearchURL"]).Returns("http://localhost:2900");
         config.Setup(x => x.ConfigValues["ElasticsearchDebug"]).Returns("True");
+        var connection = new ElasticClientFactory(config.Object);
         
         // Act
-        var connection = new ElasticClientFactory(config.Object);
         var client = connection.GetElasticsearchClient();
 
         // Assert
