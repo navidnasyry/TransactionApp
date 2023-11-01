@@ -9,9 +9,9 @@ public class ConfigurationsReader : IConfigurationsReader
         get;
     }
 
-    public ConfigurationsReader(string filePath)
+    public ConfigurationsReader(IConfigurationBuilder filePathObj, string filePath)
     {
-        IConfigurationBuilder builder = new ConfigurationBuilder().AddXmlFile(
+        var builder = filePathObj.AddXmlFile(
             filePath, false, true);
         ConfigValues = builder.Build();
     }

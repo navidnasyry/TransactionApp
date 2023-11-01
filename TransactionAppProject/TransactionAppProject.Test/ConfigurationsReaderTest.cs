@@ -1,5 +1,7 @@
 using TransactionAppProject.Classes;
 using System.IO;
+using Microsoft.Extensions.Configuration;
+
 namespace TransactionAppProject.Test;
 
 public class ConfigurationsReaderTest
@@ -9,7 +11,8 @@ public class ConfigurationsReaderTest
     {
         // Arrange
         var testConfigFile = "appTest.config";
-        var config = new ConfigurationsReader(testConfigFile);
+        var builderObj = new ConfigurationBuilder();
+        var config = new ConfigurationsReader(builderObj, testConfigFile);
         var expectedValues = new Dictionary<string, string>()
         {
             { "ElasticsearchURL", "http://localhost:9200" },
@@ -29,9 +32,13 @@ public class ConfigurationsReaderTest
     {
         // Arrange
         var invalidFilePath = "ThisFileNotExist.config";
+        var builderObj = new ConfigurationBuilder();
+
+        // Act
+        var act = () => new ConfigurationsReader(builderObj, invalidFilePath);
         
-        // Act and Assert
-        Assert.Throws<FileNotFoundException>(() => new ConfigurationsReader(invalidFilePath));
+        // Assert
+        Assert.Throws<FileNotFoundException>(act);
     }
     
 }

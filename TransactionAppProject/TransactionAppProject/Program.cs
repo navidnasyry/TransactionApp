@@ -6,7 +6,8 @@ using TransactionAppProject.Services;
 
 // Read Environment Configs
 var configFilePath = "app.config";
-var configObj = new ConfigurationsReader(configFilePath);
+var builderObj = new ConfigurationBuilder();
+var configObj = new ConfigurationsReader(builderObj, configFilePath);
 
 // Connecting to Elasticsearch
 var elasticObj = new ElasticClientFactory(configObj);
