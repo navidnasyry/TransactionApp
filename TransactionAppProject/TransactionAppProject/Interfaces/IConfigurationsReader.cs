@@ -1,6 +1,6 @@
 namespace TransactionAppProject.Interfaces;
 
-public interface IReadConfigurations
+public interface IConfigurationsReader
 {
     IConfigurationRoot ConfigValues { get; }
 }

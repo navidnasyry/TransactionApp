@@ -2,16 +2,16 @@ using TransactionAppProject.Interfaces;
 
 namespace TransactionAppProject.Classes;
 
-public class ReadConfigurations : IReadConfigurations
+public class ConfigurationsReader : IConfigurationsReader
 {
     public IConfigurationRoot ConfigValues
     {
         get;
     }
 
-    public ReadConfigurations(string filePath)
+    public ConfigurationsReader(IConfigurationBuilder filePathObj, string filePath)
     {
-        IConfigurationBuilder builder = new ConfigurationBuilder().AddXmlFile(
+        var builder = filePathObj.AddXmlFile(
             filePath, false, true);
         ConfigValues = builder.Build();
     }
