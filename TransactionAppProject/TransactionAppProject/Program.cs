@@ -1,8 +1,8 @@
 using Nest;
 using TransactionAppProject.Classes;
 using TransactionAppProject.ApplicationExceptions;
+using TransactionAppProject.Configs;
 using TransactionAppProject.Interfaces;
-using TransactionAppProject.Services;
 
 // Read Environment Configs
 var configFilePath = "app.config";
@@ -25,13 +25,11 @@ var elasticRepository = new ElasticClientRepository(elasticObj);
 
 // Start WebApplication Setup
 var builder = WebApplication.CreateBuilder(args);
-
+Console.WriteLine(builder.Configuration);
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddSingleton<IElasticClientRepository>(x=>elasticRepository);
-builder.Services.AddScoped<IIndexingService, IndexingService>();
-builder.Services.AddScoped<IDataWorkerService, DataWorkerService>();
-
+builder.Services.AddDependencyGroup();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
