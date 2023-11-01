@@ -11,18 +11,15 @@ public class ElasticClientFactoryTest
     public void CreateElasticClientFactory_ReturnNotNullClient()
     {
         // Arrange
-        var config = new Mock<IReadConfigurations>();
+        var config = new Mock<IConfigurationsReader>();
         config.Setup(x => x.ConfigValues["ElasticsearchURL"]).Returns("http://localhost:2900");
         config.Setup(x => x.ConfigValues["ElasticsearchDebug"]).Returns("True");
         var connection = new ElasticClientFactory(config.Object);
         
         // Act
         var client = connection.GetElasticsearchClient();
-
+        
         // Assert
         Assert.NotNull(client);
-        Assert.Equal(connection.ElasticUri, "http://localhost:2900");
-        Assert.Equal(connection.DebugMode, true);
-        
     }
 }

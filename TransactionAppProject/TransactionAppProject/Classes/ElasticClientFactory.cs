@@ -1,25 +1,17 @@
 using Nest;
 using TransactionAppProject.Interfaces;
+using TransactionAppProject.Models;
 
 namespace TransactionAppProject.Classes;
 
 public class ElasticClientFactory : IElasticClientFactory
 {
     private readonly IElasticClient _client = null;
-    public string ElasticUri
+    public ElasticClientFactory(IConfigurationsReader config)
     {
-        get;
-    }
-    public bool DebugMode
-    {
-        get;
-    }
-    public ElasticClientFactory(IReadConfigurations config)
-    {
-        ElasticUri = config.ConfigValues["ElasticsearchURL"];
-        DebugMode = bool.Parse(config.ConfigValues["ElasticsearchDebug"]);
-
-        var connectionSettings = CreateConnectionSettingWithUri(ElasticUri, DebugMode);
+        var _elasticUri = config.ConfigValues["ElasticsearchURL"];
+        var _debugMode = bool.Parse(config.ConfigValues["ElasticsearchDebug"]);
+        var connectionSettings = CreateConnectionSettingWithUri(_elasticUri, _debugMode);
         _client = new ElasticClient(connectionSettings);
     }
     
@@ -38,5 +30,6 @@ public class ElasticClientFactory : IElasticClientFactory
     {
         return _client;
     }
-
+    
+    
 }

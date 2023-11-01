@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Nest;
 using TransactionAppProject.Interfaces;
 using TransactionAppProject.Models;
-using TransactionAppProject.Services;
 
 namespace TransactionAppProject.Controllers;
 

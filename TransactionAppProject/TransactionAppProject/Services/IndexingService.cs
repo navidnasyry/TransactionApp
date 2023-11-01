@@ -6,16 +6,16 @@ namespace TransactionAppProject.Services;
 public class IndexingService : IIndexingService
 {
 
-    private readonly IElasticClient _client;
+    private readonly IElasticClientRepository _clientRepository;
 
-    public IndexingService(IElasticClientFactory client)
+    public IndexingService(IElasticClientRepository clientRepo)
     {
-        _client = client.GetElasticsearchClient();
+        _clientRepository = clientRepo;
     }
 
     public bool CreateIndex(string indexName)
     {
-        if (!IsIndexExist(indexName))
+        if (!IsIndexNameExist(indexName))
         {
             var returnٰٰٰVal = CreateNewIndex(indexName);
             return returnٰٰٰVal;
@@ -23,19 +23,18 @@ public class IndexingService : IIndexingService
         return false;
     }
 
-    public bool IsIndexExist(string indexName)
+    public bool IsIndexNameExist(string indexName)
     {
         
-        Console.WriteLine(indexName);
-        var isExist = _client.Indices.Exists(indexName);
-        return isExist.Exists;
+        var isExist = _clientRepository.IsIndexExist(indexName);
+        return isExist;
     }
 
     private bool CreateNewIndex(string indexName)
     {
         var indexDescriptor = CreateDescriptor(indexName);
-        var createIndexResponse = _client.Indices.Create(indexDescriptor);
-        return createIndexResponse.Acknowledged;
+        var indexResponseAck = _clientRepository.CreateIndex(indexDescriptor);
+        return indexResponseAck;
     }
 
     private CreateIndexDescriptor CreateDescriptor(string indexName)
