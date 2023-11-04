@@ -6,9 +6,9 @@ namespace TransactionAppProject.Services;
 public class IndexingService : IIndexingService
 {
 
-    private readonly IElasticClientRepository _clientRepository;
+    private readonly IElasticClientRepository<Account> _clientRepository;
 
-    public IndexingService(IElasticClientRepository clientRepo)
+    public IndexingService(IElasticClientRepository<Account> clientRepo)
     {
         _clientRepository = clientRepo;
     }

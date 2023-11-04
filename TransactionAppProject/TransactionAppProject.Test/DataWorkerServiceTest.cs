@@ -16,16 +16,22 @@ public class DataWorkerServiceTest
         new()
         {
             RefrenceNumber = "number1",
-            TransactionValue = 29292,
+            Amount = 29292,
             DestinationAccount = "111199992222",
-            SourceAccount = "122200093333"
+            SourceAccount = "122200093333",
+            TransactionID = "3452224",
+            Type = "",
+            Date = DateTime.Now
         },
         new()
         {
             RefrenceNumber = "number2",
-            TransactionValue = 292000,
+            Amount = 292000,
             DestinationAccount = "111198892222",
-            SourceAccount = "122211093333"
+            SourceAccount = "122211093333",
+            TransactionID = "3454324",
+            Type = "",
+            Date = DateTime.Now
         }
     };
 
@@ -34,7 +40,7 @@ public class DataWorkerServiceTest
     public void PostTransactionDataList_WithoutException_ReturnTrue()
     {
         // Arrange
-        var clientFactory = new Mock<IElasticClientRepository>();
+        var clientFactory = new Mock<IElasticClientRepository<Transaction>>();
         clientFactory.Setup(x => x.IndexManyData(It.IsAny<IEnumerable<Transaction>>(), It.IsAny<string>())).Returns(true);
         var dataWorker = new DataWorkerService(clientFactory.Object);
         
@@ -51,7 +57,7 @@ public class DataWorkerServiceTest
     public void PostTransactionDataList_WithoutException_ReturnFalse()
     {
         // Arrange
-        var clientFactory = new Mock<IElasticClientRepository>();
+        var clientFactory = new Mock<IElasticClientRepository<Transaction>>();
         clientFactory.Setup(x => x.IndexManyData(It.IsAny<IEnumerable<Transaction>>(), It.IsAny<string>())).Returns(false);
         var dataWorker = new DataWorkerService(clientFactory.Object);
         
@@ -66,7 +72,7 @@ public class DataWorkerServiceTest
     public void PostTransactionDataList_ThrowException_ReturnFalse()
     {
         // Arrange
-        var clientFactory = new Mock<IElasticClientRepository>();
+        var clientFactory = new Mock<IElasticClientRepository<Transaction>>();
         clientFactory.Setup(x => x.IndexManyData(It.IsAny<IEnumerable<Transaction>>(), It.IsAny<string>())).Throws(new Exception());
         var dataWorker = new DataWorkerService(clientFactory.Object);
         
@@ -83,7 +89,7 @@ public class DataWorkerServiceTest
     {
         // Arrange
         var indexName = "index";
-        var clientRepo = new Mock<IElasticClientRepository>();
+        var clientRepo = new Mock<IElasticClientRepository<Transaction>>();
         clientRepo.Setup(c => c
             .SearchAsyncAllData(indexName))
             .Returns(Task.FromResult(_dataSample.AsEnumerable()));
@@ -104,7 +110,7 @@ public class DataWorkerServiceTest
     {
         // Arrange
         var indexName = "index";
-        var clientRepo = new Mock<IElasticClientRepository>();
+        var clientRepo = new Mock<IElasticClientRepository<Transaction>>();
         clientRepo.Setup(c => c
                 .SearchAsyncAllData(indexName))
             .Throws(new GetDataFromElasticException());

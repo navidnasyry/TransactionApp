@@ -7,9 +7,9 @@ namespace TransactionAppProject.Services;
 
 public class DataWorkerService : IDataWorkerService
 {
-    private readonly IElasticClientRepository _clientRepository;
+    private readonly IElasticClientRepository<Transaction> _clientRepository;
 
-    public DataWorkerService(IElasticClientRepository clientFactory)
+    public DataWorkerService(IElasticClientRepository<Transaction> clientFactory)
     {
         _clientRepository = clientFactory;
     }
