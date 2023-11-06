@@ -49,24 +49,67 @@ public class ElasticClientRepository<T> : IElasticClientRepository<T> where T : 
     }
 
 
-    public async Task<Account> GetOneNodeDetailes(string AccountID, string indexName)
+    public async Task<Account> GetOneNodeDetailes(string AccountId, string indexName)
     {
-        var response = await _client.SearchAsync<Account>(s => s
-            .Index(indexName)
-            .Query(q => q
-                .Match(m => m
-                    .Field(f => f.AccountID)
-                    .Query(AccountID)
-                )
-            )
-        );
-        if (!response.IsValid)
+        try
         {
+            var response = await _client.SearchAsync<Account>(s => s
+                .Index(indexName)
+                .Query(q => q
+                    .Match(m => m
+                        .Field(f => f.AccountID)
+                        .Query(AccountId)
+                    )
+                )
+            );
+            Console.WriteLine(response);
+            if (!response.IsValid)
+            {
+                throw new GetDataFromElasticException();
+            }
+
+            if (response.Documents.Count == 0)
+            {
+                return null;
+            }
+            return response.Documents.ToList()[0];
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    public async Task<IEnumerable<Transaction>> ExpandOneNode(string indexName, string accountId)
+    {
+        try
+        {
+            var response = await _client.SearchAsync<Transaction>(i =>
+                i.Index(indexName)
+                    .Query(q=>q
+                        .Bool(b=>b
+                            .Should(s=>s
+                                .Term(m=>m
+                                    .Field(f=>f.SourceAccount)
+                                    .Value(accountId)
+                                ),
+                                e=>e
+                                    .Term(g=>g
+                                        .Field(i=>i.DestinationAccount)
+                                        .Value(accountId)
+                                    )
+                            )
+                        )
+                    )
+            );
+            return response.Documents.ToList();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
             throw new GetDataFromElasticException();
         }
-
-        return response.Documents.ToList()[0];
     }
-    
     
 }

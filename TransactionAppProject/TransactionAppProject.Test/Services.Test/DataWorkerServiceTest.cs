@@ -1,12 +1,10 @@
 using Moq;
-using TransactionAppProject.Classes;
-using Nest;
 using TransactionAppProject.ApplicationExceptions;
-using TransactionAppProject.Models;
 using TransactionAppProject.Interfaces;
+using TransactionAppProject.Models;
 using TransactionAppProject.Services;
 
-namespace TransactionAppProject.Test;
+namespace TransactionAppProject.Test.Services.Test;
 
 public class DataWorkerServiceTest
 {
@@ -106,7 +104,7 @@ public class DataWorkerServiceTest
     }
     
     [Fact]
-    public async Task AllLinks_ThrowException()
+    public void AllLinks_ThrowException()
     {
         // Arrange
         var indexName = "index";

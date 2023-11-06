@@ -14,7 +14,7 @@ public class IndexingServiceTest
     {
         // Arrange
         var indexName = "sampleName";
-        var clientRepositoryMock = new Mock<IElasticClientRepository>();
+        var clientRepositoryMock = new Mock<IElasticClientRepository<Account>>();
         clientRepositoryMock.Setup(x => x.IsIndexExist(indexName)).Returns(false);
         clientRepositoryMock.Setup(x => x.CreateIndex(It.IsAny<CreateIndexDescriptor>())).Returns(true);
         var indexService = new IndexingService(clientRepositoryMock.Object);
@@ -31,7 +31,7 @@ public class IndexingServiceTest
     {
         // Arrange
         var indexName = "sampleName";
-        var clientRepositoryMock = new Mock<IElasticClientRepository>();
+        var clientRepositoryMock = new Mock<IElasticClientRepository<Account>>();
         clientRepositoryMock.Setup(x => x.IsIndexExist(indexName)).Returns(false);
         clientRepositoryMock.Setup(x => x.CreateIndex(It.IsAny<CreateIndexDescriptor>())).Returns(false);
         var indexService = new IndexingService(clientRepositoryMock.Object);
@@ -48,7 +48,7 @@ public class IndexingServiceTest
     {
         // Arrange
         var inValidName = "repeatedName";
-        var clientRepositoryMock = new Mock<IElasticClientRepository>();
+        var clientRepositoryMock = new Mock<IElasticClientRepository<Account>>();
         clientRepositoryMock.Setup(x => x.IsIndexExist(inValidName)).Returns(true);
         var indexService = new IndexingService(clientRepositoryMock.Object);
 
@@ -64,7 +64,7 @@ public class IndexingServiceTest
     {
         // Arrange
         var notExistName = "NotExistName";
-        var clientRepositoryMock = new Mock<IElasticClientRepository>();
+        var clientRepositoryMock = new Mock<IElasticClientRepository<Account>>();
         clientRepositoryMock.Setup(x => x.IsIndexExist(notExistName)).Returns(false);
         var indexService = new IndexingService(clientRepositoryMock.Object);
 
@@ -80,7 +80,7 @@ public class IndexingServiceTest
     {
         // Arrange
         var existName = "ExistName";
-        var clientRepositoryMock = new Mock<IElasticClientRepository>();
+        var clientRepositoryMock = new Mock<IElasticClientRepository<Account>>();
         clientRepositoryMock.Setup(x => x.IsIndexExist(existName)).Returns(true);
         var indexService = new IndexingService(clientRepositoryMock.Object);
 

@@ -50,6 +50,12 @@ public class AccountWorkerController : Controller
         try
         {
             var response = await _accountWorker.GetAccountDetails(indexName, accountID);
+            if (response == null)
+            {
+                return BadRequest("This AccountId is not valid!");
+                
+            }
+
             return Ok(response);
         }
         catch (Exception e)

@@ -48,11 +48,11 @@ public class AccountWorkerService : IAccountWorkerService
         }
     }
 
-    public async Task<Account> GetAccountDetails(string indexName ,string accountID)
+    public async Task<Account> GetAccountDetails(string indexName ,string accountId)
     {
         try
         {
-            var response = await _clientRepository.GetOneNodeDetailes(accountID, indexName);
+            var response = await _clientRepository.GetOneNodeDetailes(accountId, indexName);
             return response;
         }
         catch (Exception e)

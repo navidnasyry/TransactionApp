@@ -36,7 +36,8 @@ public static class MyConfigServiceCollectionExtensions
         services.AddScoped<IIndexingService, IndexingService>();
         services.AddScoped<IDataWorkerService, DataWorkerService>();
         services.AddScoped<IAccountWorkerService, AccountWorkerService>();
-
+        services.AddScoped<IGraphService, GraphService>();
+        
         return services;
     }
 }

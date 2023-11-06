@@ -9,6 +9,7 @@ public interface IElasticClientRepository<T>
     Task<IEnumerable<T>> SearchAsyncAllData(string indexName);
     public bool IsIndexExist(string indexName);
     bool CreateIndex(CreateIndexDescriptor indexDescriptor);
-    Task<Account> GetOneNodeDetailes(string AccountID, string indexName);
+    Task<Account> GetOneNodeDetailes(string accountId, string indexName);
+    Task<IEnumerable<Transaction>> ExpandOneNode(string indexName, string accountId);
 
 }
